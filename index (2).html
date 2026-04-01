@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐾 Теплі Лапки — Притулок для Собак</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fdf6ec;
+    --warm: #f5e6cc;
+    --brown: #7a4419;
+    --brown-light: #a3622e;
+    --orange: #e8833a;
+    --orange-light: #f5a96a;
+    --green: #4a7c59;
+    --text: #2d1a0e;
+    --text-soft: #6b4226;
+    --card-bg: #fffdf9;
+    --shadow: 0 8px 32px rgba(122,68,25,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, var(--brown) 0%, var(--brown-light) 60%, var(--orange) 100%);
+    padding: 48px 24px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='10'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .paws-bg {
+    position: absolute;
+    inset: 0;
+    font-size: 60px;
+    opacity: 0.06;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 10px;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    color: #fff;
+    font-weight: 900;
+    letter-spacing: -1px;
+    text-shadow: 0 3px 12px rgba(0,0,0,0.2);
+    position: relative;
+  }
+  header p {
+    margin-top: 12px;
+    color: rgba(255,255,255,0.85);
+    font-size: 1.1rem;
+    font-weight: 600;
+    position: relative;
+  }
+  .header-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 99px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-top: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  /* MAIN */
+  main {
+    max-width: 1100px;
+    margin: -28px auto 60px;
+    padding: 0 20px;
+  }
+
+  /* ADD FORM CARD */
+  .add-card {
+    background: var(--card-bg);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    padding: 36px 40px;
+    margin-bottom: 48px;
+    border: 1.5px solid var(--warm);
+    animation: slideUp 0.6s ease both;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .add-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    color: var(--brown);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .form-grid .full { grid-column: 1 / -1; }
+
+  label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-soft);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  input[type="text"], input[type="number"], select, textarea {
+    width: 100%;
+    background: var(--cream);
+    border: 1.5px solid var(--warm);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px rgba(232,131,58,0.15);
+  }
+  textarea { resize: vertical; min-height: 90px; }
+
+  /* Photo upload */
+  .photo-upload-area {
+    border: 2px dashed var(--orange-light);
+    border-radius: 16px;
+    padding: 28px;
+    text-align: center;
+    transition: background 0.2s, border-color 0.2s;
+    background: var(--cream);
+  }
+  .photo-upload-area:hover { background: var(--warm); border-color: var(--orange); }
+  .photo-upload-area input[type="file"] { display: none; }
+  .upload-icon { font-size: 2.5rem; margin-bottom: 8px; }
+  .upload-text { font-weight: 700; color: var(--brown-light); font-size: 0.95rem; }
+  .upload-sub  { font-size: 0.8rem; color: var(--text-soft); margin-top: 4px; }
+  .btn-pick-photo {
+    display: inline-block;
+    margin-top: 12px;
+    background: var(--warm);
+    border: 1.5px solid var(--orange-light);
+    border-radius: 10px;
+    padding: 8px 20px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--brown);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-pick-photo:hover { background: #f0d0a0; }
+  #photo-preview {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-top: 12px;
+    display: none;
+  }
+
+  /* Submit btn */
+  .btn-add {
+    background: linear-gradient(135deg, var(--orange), var(--brown-light));
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 14px 36px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 16px rgba(232,131,58,0.35);
+    margin-top: 8px;
+  }
+  .btn-add:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,131,58,0.45); }
+  .btn-add:active { transform: translateY(0); }
+
+  /* FILTERS */
+  .filters {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .filters span { font-weight: 700; color: var(--text-soft); font-size: 0.9rem; }
+  .filter-btn {
+    background: var(--card-bg);
+    border: 1.5px solid var(--warm);
+    border-radius: 99px;
+    padding: 7px 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-soft);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: #fff;
+  }
+  .search-box {
+    margin-left: auto;
+    background: var(--card-bg);
+    border: 1.5px solid var(--warm);
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    width: 220px;
+    transition: border-color 0.2s;
+  }
+  .search-box:focus { border-color: var(--orange); }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--brown);
+    margin-bottom: 24px;
+  }
+  .section-title span { color: var(--orange); }
+
+  /* DOG GRID */
+  .dogs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 28px;
+  }
+
+  .dog-card {
+    background: var(--card-bg);
+    border-radius: 22px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1.5px solid var(--warm);
+    transition: transform 0.22s, box-shadow 0.22s;
+    animation: fadeIn 0.5s ease both;
+    display: flex;
+    flex-direction: column;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.96) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .dog-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(122,68,25,0.18); }
+
+  .dog-photo {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+  }
+  .dog-photo-placeholder {
+    width: 100%;
+    height: 220px;
+    background: linear-gradient(135deg, var(--warm), #f0d9b5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+  }
+
+  .dog-info { padding: 20px 22px 24px; display: flex; flex-direction: column; flex: 1; }
+  .dog-desc { flex: 1; }
+  .dog-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .dog-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--brown);
+  }
+  .dog-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 12px;
+    border-radius: 99px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .badge-male   { background: #dbeafe; color: #1e40af; }
+  .badge-female { background: #fce7f3; color: #9d174d; }
+  .badge-unknown{ background: var(--warm); color: var(--text-soft); }
+
+  .dog-meta {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .dog-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    font-weight: 600;
+  }
+  .dog-desc {
+    font-size: 0.93rem;
+    color: #5a3a20;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .dog-actions { display: flex; gap: 10px; }
+  .btn-adopt {
+    flex: 1;
+    background: linear-gradient(135deg, var(--green), #3a6647);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .btn-adopt:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-edit {
+    background: #fffbeb;
+    border: 1.5px solid #fcd34d;
+    color: #b45309;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-edit:hover { background: #fef3c7; }
+  .btn-delete {
+    background: #fff0f0;
+    border: 1.5px solid #fca5a5;
+    color: #dc2626;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-delete:hover { background: #fee2e2; }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(45,26,14,0.5);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 36px 40px;
+    width: 100%;
+    max-width: 560px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.25s;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+  .modal h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--brown); margin-bottom: 24px; }
+  .modal-actions { display: flex; gap: 12px; margin-top: 20px; }
+  .btn-save {
+    flex: 1;
+    background: linear-gradient(135deg, var(--orange), var(--brown-light));
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 13px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .btn-save:hover { opacity: 0.88; }
+  .btn-cancel {
+    background: var(--cream);
+    border: 1.5px solid var(--warm);
+    color: var(--text-soft);
+    border-radius: 12px;
+    padding: 13px 24px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  .btn-cancel:hover { background: var(--warm); }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-soft);
+    grid-column: 1 / -1;
+  }
+  .empty-state .big-icon { font-size: 5rem; margin-bottom: 16px; }
+  .empty-state h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--brown); }
+  .empty-state p { margin-top: 8px; font-size: 0.95rem; }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: flex;
+    gap: 24px;
+    background: var(--card-bg);
+    border: 1.5px solid var(--warm);
+    border-radius: 16px;
+    padding: 16px 28px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--orange); font-weight: 700; }
+  .stat-label { font-size: 0.78rem; font-weight: 700; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.7px; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 32px;
+    color: var(--text-soft);
+    font-size: 0.9rem;
+    border-top: 1.5px solid var(--warm);
+  }
+  footer strong { color: var(--brown); }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    background: var(--brown);
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s;
+    pointer-events: none;
+    z-index: 999;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 600px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .add-card { padding: 24px 20px; }
+    .filters { gap: 8px; }
+    .search-box { width: 100%; margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="paws-bg" id="pawsBg"></div>
+  <h1>🐾 Теплі Лапки</h1>
+  <p>Притулок для собак — знайди свого найкращого друга</p>
+  <span class="header-badge">Kyiv, Ukraine</span>
+</header>
+
+<main>
+
+  <!-- ADD DOG FORM -->
+  <div class="add-card">
+    <h2>🐕 Додати собаку</h2>
+    <div class="form-grid">
+      <div>
+        <label>Ім'я собаки *</label>
+        <input type="text" id="dogName" placeholder="Барсик, Рекс, Буля…">
+      </div>
+      <div>
+        <label>Порода</label>
+        <input type="text" id="dogBreed" placeholder="Лабрадор, Дворняга…">
+      </div>
+      <div>
+        <label>Вік</label>
+        <input type="text" id="dogAge" placeholder="напр. 2 роки, 6 місяців">
+      </div>
+      <div>
+        <label>Стать</label>
+        <select id="dogGender">
+          <option value="">— оберіть —</option>
+          <option value="male">Хлопчик 🐶</option>
+          <option value="female">Дівчинка 🐕</option>
+        </select>
+      </div>
+      <div>
+        <label>Розмір</label>
+        <select id="dogSize">
+          <option value="">— оберіть —</option>
+          <option value="small">Малий</option>
+          <option value="medium">Середній</option>
+          <option value="large">Великий</option>
+        </select>
+      </div>
+      <div>
+        <label>Статус</label>
+        <select id="dogStatus">
+          <option value="available">Шукає дім 💛</option>
+          <option value="reserved">Зарезервований</option>
+          <option value="adopted">Знайшов дім ✅</option>
+        </select>
+      </div>
+      <div class="full">
+        <label>Опис</label>
+        <textarea id="dogDesc" placeholder="Розкажіть про характер, звички, особливості…"></textarea>
+      </div>
+      <div class="full">
+        <label>Фото</label>
+        <div class="photo-upload-area" id="uploadArea">
+          <input type="file" id="dogPhoto" accept="image/*" onchange="previewPhoto(event)">
+          <div class="upload-icon">📷</div>
+          <div class="upload-text">Натисни або перетягни фото</div>
+          <div class="upload-sub">JPG, PNG, WEBP до 10 МБ</div>
+          <button type="button" class="btn-pick-photo" onclick="document.getElementById('dogPhoto').click()">📂 Обрати фото</button>
+          <img id="photo-preview" src="" alt="Попередній перегляд">
+        </div>
+      </div>
+    </div>
+    <br>
+    <button class="btn-add" onclick="addDog()">🐾 Додати до списку</button>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-bar" id="statsBar"></div>
+
+  <!-- FILTERS -->
+  <div class="filters">
+    <span>Фільтр:</span>
+    <button class="filter-btn active" onclick="setFilter('all', this)">Всі</button>
+    <button class="filter-btn" onclick="setFilter('available', this)">Шукають дім</button>
+    <button class="filter-btn" onclick="setFilter('reserved', this)">Зарезервовані</button>
+    <button class="filter-btn" onclick="setFilter('adopted', this)">Знайшли дім</button>
+    <input type="text" class="search-box" id="searchBox" placeholder="🔍 Пошук за іменем…" oninput="renderDogs()">
+  </div>
+
+  <h2 class="section-title">Наші <span>вихованці</span></h2>
+
+  <div class="dogs-grid" id="dogsGrid"></div>
+</main>
+
+<footer>
+  Зроблено з ❤️ для <strong>Теплих Лапок</strong> — бо кожна собака заслуговує на дім
+</footer>
+
+<!-- EDIT MODAL -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <h2>✏️ Редагувати собаку</h2>
+    <div class="form-grid">
+      <div><label>Ім'я *</label><input type="text" id="editName" placeholder="Ім'я собаки"></div>
+      <div><label>Порода</label><input type="text" id="editBreed" placeholder="Порода"></div>
+      <div><label>Вік</label><input type="text" id="editAge" placeholder="Вік"></div>
+      <div><label>Стать</label>
+        <select id="editGender">
+          <option value="">— оберіть —</option>
+          <option value="male">Хлопчик 🐶</option>
+          <option value="female">Дівчинка 🐕</option>
+        </select>
+      </div>
+      <div><label>Розмір</label>
+        <select id="editSize">
+          <option value="">— оберіть —</option>
+          <option value="small">Малий</option>
+          <option value="medium">Середній</option>
+          <option value="large">Великий</option>
+        </select>
+      </div>
+      <div><label>Статус</label>
+        <select id="editStatus">
+          <option value="available">Шукає дім 💛</option>
+          <option value="reserved">Зарезервований</option>
+          <option value="adopted">Знайшов дім ✅</option>
+        </select>
+      </div>
+      <div class="full"><label>Опис</label><textarea id="editDesc" placeholder="Опис…"></textarea></div>
+      <div class="full">
+        <label>Нове фото (необов'язково)</label>
+        <div class="photo-upload-area">
+          <input type="file" id="editPhoto" accept="image/*" onchange="previewEditPhoto(event)">
+          <div class="upload-icon" id="editUploadIcon">📷</div>
+          <div class="upload-text" id="editUploadText">Натисни щоб змінити фото</div>
+          <img id="edit-photo-preview" src="" style="display:none;width:100%;max-height:160px;object-fit:cover;border-radius:10px;margin-top:10px;">
+        </div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-save" onclick="saveEdit()">💾 Зберегти</button>
+      <button class="btn-cancel" onclick="closeModal()">Скасувати</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Paw decorations
+const pawsBg = document.getElementById('pawsBg');
+for (let i = 0; i < 30; i++) pawsBg.innerHTML += '🐾';
+
+// State
+let dogs = JSON.parse(localStorage.getItem('shelter_dogs') || '[]');
+let currentFilter = 'all';
+let photoData = null;
+
+function previewPhoto(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    photoData = ev.target.result;
+    const preview = document.getElementById('photo-preview');
+    preview.src = photoData;
+    preview.style.display = 'block';
+    document.querySelector('.upload-icon').style.display = 'none';
+    document.querySelector('.upload-text').textContent = file.name;
+  };
+  reader.readAsDataURL(file);
+}
+
+function addDog() {
+  const name = document.getElementById('dogName').value.trim();
+  if (!name) { showToast('⚠️ Введіть ім\'я собаки!'); return; }
+
+  const dog = {
+    id: Date.now(),
+    name,
+    breed: document.getElementById('dogBreed').value.trim() || 'Невідома',
+    age:   document.getElementById('dogAge').value.trim()  || '—',
+    gender: document.getElementById('dogGender').value,
+    size:   document.getElementById('dogSize').value,
+    status: document.getElementById('dogStatus').value,
+    desc:   document.getElementById('dogDesc').value.trim() || 'Опису ще немає.',
+    photo:  photoData,
+    date:   new Date().toLocaleDateString('uk-UA')
+  };
+
+  dogs.unshift(dog);
+  save();
+  resetForm();
+  renderDogs();
+  showToast(`🐾 ${dog.name} доданий(а) до списку!`);
+}
+
+function deleteDog(id) {
+  dogs = dogs.filter(d => d.id !== id);
+  save();
+  renderDogs();
+  showToast('🗑️ Собаку видалено');
+}
+
+function toggleAdopt(id) {
+  const d = dogs.find(d => d.id === id);
+  if (!d) return;
+  if (d.status === 'adopted') { d.status = 'available'; showToast(`💛 ${d.name} знову шукає дім`); }
+  else { d.status = 'adopted'; showToast(`🎉 ${d.name} знайшов(ла) дім!`); }
+  save();
+  renderDogs();
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDogs();
+}
+
+function renderDogs() {
+  const search = document.getElementById('searchBox').value.toLowerCase();
+  let list = dogs.filter(d => {
+    if (currentFilter !== 'all' && d.status !== currentFilter) return false;
+    if (search && !d.name.toLowerCase().includes(search) && !d.breed.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  const grid = document.getElementById('dogsGrid');
+  if (list.length === 0) {
+    grid.innerHTML = `<div class="empty-state">
+      <div class="big-icon">🐕</div>
+      <h3>Поки що порожньо…</h3>
+      <p>Додайте першу собаку вище, щоб вона знайшла свій дім!</p>
+    </div>`;
+  } else {
+    grid.innerHTML = list.map(dogCard).join('');
+  }
+  renderStats();
+}
+
+function dogCard(d) {
+  const genderLabel = d.gender === 'male' ? '♂ Хлопчик' : d.gender === 'female' ? '♀ Дівчинка' : '';
+  const genderClass = d.gender === 'male' ? 'badge-male' : d.gender === 'female' ? 'badge-female' : 'badge-unknown';
+  const statusEmoji = { available: '💛 Шукає дім', reserved: '🔒 Зарезервований', adopted: '✅ Знайшов дім' }[d.status] || '';
+  const sizeMap = { small: '🐩 Малий', medium: '🐕 Середній', large: '🦮 Великий' };
+
+  return `<div class="dog-card">
+    ${d.photo
+      ? `<img class="dog-photo" src="${d.photo}" alt="${d.name}">`
+      : `<div class="dog-photo-placeholder">🐕</div>`}
+    <div class="dog-info">
+      <div class="dog-header">
+        <div class="dog-name">${d.name}</div>
+        ${genderLabel ? `<span class="dog-badge ${genderClass}">${genderLabel}</span>` : ''}
+      </div>
+      <div class="dog-meta">
+        <span class="dog-meta-item">🦴 ${d.breed}</span>
+        <span class="dog-meta-item">🎂 ${d.age}</span>
+        ${d.size ? `<span class="dog-meta-item">${sizeMap[d.size] || ''}</span>` : ''}
+        <span class="dog-meta-item">${statusEmoji}</span>
+      </div>
+      <p class="dog-desc">${d.desc}</p>
+      <div class="dog-actions">
+        <button class="btn-adopt" onclick="toggleAdopt(${d.id})">
+          ${d.status === 'adopted' ? '↩ Повернути в список' : '🏠 Взяти додому'}
+        </button>
+        <button class="btn-edit" onclick="openEdit(${d.id})" title="Редагувати">✏️</button>
+        <button class="btn-delete" onclick="deleteDog(${d.id})" title="Видалити">🗑</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderStats() {
+  const total    = dogs.length;
+  const available= dogs.filter(d => d.status === 'available').length;
+  const adopted  = dogs.filter(d => d.status === 'adopted').length;
+  const reserved = dogs.filter(d => d.status === 'reserved').length;
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat"><div class="stat-num">${total}</div><div class="stat-label">Всього</div></div>
+    <div class="stat"><div class="stat-num">${available}</div><div class="stat-label">Шукають дім</div></div>
+    <div class="stat"><div class="stat-num">${reserved}</div><div class="stat-label">Зарезервовані</div></div>
+    <div class="stat"><div class="stat-num">${adopted}</div><div class="stat-label">Знайшли дім</div></div>
+  `;
+}
+
+function resetForm() {
+  ['dogName','dogBreed','dogAge','dogDesc'].forEach(id => document.getElementById(id).value = '');
+  ['dogGender','dogSize'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('dogStatus').value = 'available';
+  document.getElementById('dogPhoto').value = '';
+  const preview = document.getElementById('photo-preview');
+  preview.style.display = 'none';
+  document.querySelector('.upload-icon').style.display = 'block';
+  document.querySelector('.upload-text').textContent = 'Натисни або перетягни фото';
+  photoData = null;
+}
+
+function save() { localStorage.setItem('shelter_dogs', JSON.stringify(dogs)); }
+
+let editingId = null;
+let editPhotoData = null;
+
+function openEdit(id) {
+  const d = dogs.find(d => d.id === id);
+  if (!d) return;
+  editingId = id;
+  editPhotoData = null;
+  document.getElementById('editName').value   = d.name;
+  document.getElementById('editBreed').value  = d.breed === 'Невідома' ? '' : d.breed;
+  document.getElementById('editAge').value    = d.age === '—' ? '' : d.age;
+  document.getElementById('editGender').value = d.gender || '';
+  document.getElementById('editSize').value   = d.size || '';
+  document.getElementById('editStatus').value = d.status;
+  document.getElementById('editDesc').value   = d.desc === 'Опису ще немає.' ? '' : d.desc;
+  document.getElementById('editPhoto').value  = '';
+  const prev = document.getElementById('edit-photo-preview');
+  if (d.photo) { prev.src = d.photo; prev.style.display = 'block'; }
+  else { prev.style.display = 'none'; }
+  document.getElementById('editUploadIcon').style.display = 'block';
+  document.getElementById('editUploadText').textContent = 'Натисни щоб змінити фото';
+  document.getElementById('editModal').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('editModal').classList.remove('open');
+  editingId = null;
+}
+
+function previewEditPhoto(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    editPhotoData = ev.target.result;
+    const prev = document.getElementById('edit-photo-preview');
+    prev.src = editPhotoData;
+    prev.style.display = 'block';
+    document.getElementById('editUploadIcon').style.display = 'none';
+    document.getElementById('editUploadText').textContent = file.name;
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveEdit() {
+  const name = document.getElementById('editName').value.trim();
+  if (!name) { showToast('⚠️ Введіть ім\'я собаки!'); return; }
+  const d = dogs.find(d => d.id === editingId);
+  if (!d) return;
+  d.name   = name;
+  d.breed  = document.getElementById('editBreed').value.trim()  || 'Невідома';
+  d.age    = document.getElementById('editAge').value.trim()    || '—';
+  d.gender = document.getElementById('editGender').value;
+  d.size   = document.getElementById('editSize').value;
+  d.status = document.getElementById('editStatus').value;
+  d.desc   = document.getElementById('editDesc').value.trim()   || 'Опису ще немає.';
+  if (editPhotoData) d.photo = editPhotoData;
+  save();
+  renderDogs();
+  closeModal();
+  showToast(`✅ ${d.name} оновлено!`);
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// Init with sample dog
+if (dogs.length === 0) {
+  dogs = [{
+    id: 1,
+    name: 'Буля',
+    breed: 'Лабрадор мікс',
+    age: '3 роки',
+    gender: 'female',
+    size: 'medium',
+    status: 'available',
+    desc: 'Ласкава, весела і дуже любить дітей. Вакцинована, стерилізована. Обожнює прогулянки та іграшки!',
+    photo: null,
+    date: '01.04.2025'
+  }];
+  save();
+}
+
+renderDogs();
+
+document.getElementById('editModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+</body>
+</html>
